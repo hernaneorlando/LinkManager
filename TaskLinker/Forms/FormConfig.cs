@@ -172,11 +172,16 @@ namespace TaskLinker.Forms
                     }
                     else
                     {
-                        urlNode.Nodes.Add(new HiddenCheckBoxTreeNode
+                        var textNode = new HiddenCheckBoxTreeNode
                         {
                             Text = url.Url,
                             Checked = false
-                        });
+                        };
+
+                        if (!string.IsNullOrWhiteSpace(url.Url))
+                            textNode.AddNodeContextMenu("Editar", (sender, e) => textNode.Text = new NodePrompt("Editar", "Editar URL").Result);
+
+                        urlNode.Nodes.Add(textNode);
                     }
 
                     return urlNode;
