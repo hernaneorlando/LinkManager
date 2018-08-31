@@ -16,7 +16,7 @@ namespace TaskLinker
     public class TaskLinkerRepository : ApplicationContext
     {
         private readonly NotifyIcon _trayIcon;
-        private readonly FormConfig _configWindow;
+        private readonly SettingsForm _configWindow;
 
         private RepositoryViewModel _repository;
 
@@ -26,7 +26,7 @@ namespace TaskLinker
 
             _repository = new RepositoryViewModel();
             var listMenuItem = GetMenuItemListFromRepository();
-            _configWindow = new FormConfig();
+            _configWindow = new SettingsForm();
             _configWindow.FormClosed += (formSender, formEvent) => RefreshMenu();
 
             // Initialize Tray Icon

@@ -3,7 +3,7 @@ using TaskLinker.Properties;
 
 namespace TaskLinker.Forms
 {
-    partial class FormConfig
+    partial class SettingsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -31,7 +31,7 @@ namespace TaskLinker.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormConfig));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabRepository = new System.Windows.Forms.TabPage();
             this.saveButton = new System.Windows.Forms.Button();

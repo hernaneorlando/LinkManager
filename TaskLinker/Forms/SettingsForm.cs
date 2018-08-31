@@ -8,15 +8,25 @@ using TaskLinker.Util;
 
 namespace TaskLinker.Forms
 {
-    public partial class FormConfig : Form
+    public partial class SettingsForm : Form
     {
-        private const string AddNewUrl = "Add new URL";
+        private const string Collapse = "Collapse All";
+        private const string Expand = "Expand All";
+        private const string Mark = "Mark Group";
+        private const string UnMark = "Unmark Group";
+        private const string GroupName = "Type group name:";
+        private const string SubGroupName = "Type sub group name:";
+        private const string NewGroup = "Add New Group";
+        private const string NewSubGroup = "Add New Sub Group";
+        private const string NewUrl = "Add new URL";
+        private const string Edit = "Edit";
+        private const string EditUrl = "Edit URL";
 
         private bool _collapsed = true;
 
         private RepositoryViewModel _repository;
 
-        public FormConfig()
+        public SettingsForm()
         {
             InitializeComponent();
         }
@@ -34,11 +44,9 @@ namespace TaskLinker.Forms
         private void ExpandAllButton_Click(object sender, EventArgs e)
         {
             if (!Equals(sender, expandAllButton))
-            {
                 return;
-            }
 
-            expandAllButton.Text = _collapsed ? "Collapse All" : "Expand All";
+            expandAllButton.Text = _collapsed ? Collapse : Expand;
             repositoryTreeView.BeginUpdate();
             if (_collapsed)
             {
@@ -52,9 +60,7 @@ namespace TaskLinker.Forms
 
             repositoryTreeView.EndUpdate();
             if (repositoryTreeView.Nodes.Count > 0)
-            {
                 repositoryTreeView.SelectedNode = repositoryTreeView.Nodes[0];
-            }
 
             _collapsed = !_collapsed;
         }
@@ -62,9 +68,7 @@ namespace TaskLinker.Forms
         private void MarkGroupButton_Click(object sender, EventArgs e)
         {
             if (!Equals(sender, markGroupButton))
-            {
                 return;
-            }
 
             RedrawMarkedTree(!repositoryTreeView.CheckBoxes);
         }
@@ -84,9 +88,7 @@ namespace TaskLinker.Forms
                     for (var j = secondLevelNodes.Count - 1; j >= 0; j--)
                     {
                         if (secondLevelNodes[j].Checked)
-                        {
                             secondLevelNodes.RemoveAt(j);
-                        }
                     }
                 }
             }
@@ -94,7 +96,7 @@ namespace TaskLinker.Forms
 
         private void AddNewGroupButton_Click(object sender, EventArgs e)
         {
-            CreateNodeContextMenu(null, "Type group name:", "Add New Group", "Add new sub group");
+            CreateNodeContextMenu(null, GroupName, NewGroup, NewSubGroup);
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
@@ -130,13 +132,16 @@ namespace TaskLinker.Forms
 
         private void AddNewSubGroup(ref TreeNode groupNode)
         {
-            CreateNodeContextMenu(groupNode, "Type sub group name:", "Add New SubGroup", AddNewUrl);
+            CreateNodeContextMenu(groupNode, SubGroupName, NewSubGroup, NewUrl);
         }
 
         private void CreateNodeContextMenu(TreeNode node, string nodeText, string nodeCaption, string menuText)
         {
-            var nodePrompt = new NodePrompt(nodeText, nodeCaption);
-            var newNode = new TreeNode(nodePrompt.Result);
+            var nodePrompt = Prompt(nodeText, nodeCaption);
+            if (string.IsNullOrWhiteSpace(nodePrompt))
+                return;
+
+            var newNode = new TreeNode(nodePrompt);
 
             switch (node?.Level)
             {
@@ -168,7 +173,7 @@ namespace TaskLinker.Forms
 
                     if (string.IsNullOrWhiteSpace(url.Url) && createGroupNodeContextMenu)
                     {
-                        urlNode.AddNodeContextMenu(AddNewUrl, (sender, e) => AddNewSubGroup(ref urlNode));
+                        urlNode.AddNodeContextMenu(NewUrl, (sender, e) => AddNewSubGroup(ref urlNode));
                     }
                     else
                     {
@@ -179,7 +184,7 @@ namespace TaskLinker.Forms
                         };
 
                         if (!string.IsNullOrWhiteSpace(url.Url))
-                            textNode.AddNodeContextMenu("Editar", (sender, e) => textNode.Text = new NodePrompt("Editar", "Editar URL").Result);
+                            textNode.AddNodeContextMenu(Edit, (sender, e) => textNode.Text = Prompt(Edit, EditUrl));
 
                         urlNode.Nodes.Add(textNode);
                     }
@@ -189,9 +194,7 @@ namespace TaskLinker.Forms
 
                 var groupNode = new TreeNode(node.GroupName, urlNodes);
                 if (createGroupNodeContextMenu)
-                {
-                    groupNode.AddNodeContextMenu("Add new sub group", (sender, e) => AddNewSubGroup(ref groupNode));
-                }
+                    groupNode.AddNodeContextMenu(NewSubGroup, (sender, e) => AddNewSubGroup(ref groupNode));
 
                 repositoryTreeView.Nodes.Add(groupNode);
             });
@@ -215,7 +218,7 @@ namespace TaskLinker.Forms
 
         private void RedrawMarkedTree(bool enableCheckBox)
         {
-            var buttomText = enableCheckBox ? "Unmark Group" : "Mark Group";
+            var buttomText = enableCheckBox ? UnMark : Mark;
 
             markGroupButton.Text = buttomText;
             repositoryTreeView.BeginUpdate();
@@ -224,18 +227,18 @@ namespace TaskLinker.Forms
             CreateNodes(!enableCheckBox);
 
             if (!_collapsed)
-            {
                 repositoryTreeView.ExpandAll();
-            }
 
             repositoryTreeView.EndUpdate();
 
             if (repositoryTreeView.Nodes.Count > 0)
-            {
                 repositoryTreeView.SelectedNode = repositoryTreeView.Nodes[0];
-            }
         }
 
-
+        public string Prompt(string text, string caption)
+        {
+            using (var prompt = new PromptForm(text, caption))
+                return prompt.ShowDialog() == DialogResult.OK ? prompt.Result : null;
+        }
     }
 }

@@ -68,11 +68,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\FormConfig.cs">
+    <Compile Include="Forms\PromptForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormConfig.Designer.cs">
-      <DependentUpon>FormConfig.cs</DependentUpon>
+    <Compile Include="Forms\PromptForm.Designer.cs">
+      <DependentUpon>PromptForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Util\TaskLinkerUtil.cs" />
@@ -80,15 +86,17 @@
     <Compile Include="Forms\MixedCheckBoxesTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Forms\NodePrompt.cs" />
     <Compile Include="TaskLinkerRepository.cs" />
     <Compile Include="Model\RepositoryViewModel.cs" />
     <Compile Include="Model\UrlGroupViewModel.cs" />
     <Compile Include="Model\UrlViewModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\FormConfig.resx">
-      <DependentUpon>FormConfig.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\PromptForm.resx">
+      <DependentUpon>PromptForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
