@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2047
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskLinker", "TaskLinker\TaskLinker.csproj", "{08BACDC8-E3EA-4E49-9214-28F83D072625}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskLinker.UI", "TaskLinker.UI\TaskLinker.UI.csproj", "{F0DCE1B7-8EEC-434F-ACD4-1D385729E9C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskLinker.Persistence", "TaskLinker.Persistence\TaskLinker.Persistence.csproj", "{9EC84949-DD9A-44FE-A8F1-C6E8012211CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +13,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{08BACDC8-E3EA-4E49-9214-28F83D072625}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{08BACDC8-E3EA-4E49-9214-28F83D072625}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{08BACDC8-E3EA-4E49-9214-28F83D072625}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{08BACDC8-E3EA-4E49-9214-28F83D072625}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0DCE1B7-8EEC-434F-ACD4-1D385729E9C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0DCE1B7-8EEC-434F-ACD4-1D385729E9C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0DCE1B7-8EEC-434F-ACD4-1D385729E9C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0DCE1B7-8EEC-434F-ACD4-1D385729E9C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EC84949-DD9A-44FE-A8F1-C6E8012211CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EC84949-DD9A-44FE-A8F1-C6E8012211CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EC84949-DD9A-44FE-A8F1-C6E8012211CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EC84949-DD9A-44FE-A8F1-C6E8012211CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0E23E698-2193-44DB-B769-61FD04C74D8E}
+		SolutionGuid = {4F2D4343-AC8C-45A6-B852-559B377945DD}
 	EndGlobalSection
 EndGlobal
