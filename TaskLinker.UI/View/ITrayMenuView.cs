@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace TaskLinker.UI.View
 {
     public interface ITrayMenuView
     {
-        public void InitMenu();
+        //public Task InitMenu();
     }
 }

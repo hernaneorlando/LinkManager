@@ -15,12 +15,21 @@
     <None Remove="Resources\color_jigsawpuzzle.ico" />
     <None Remove="Resources\gold_jigsawpuzzle.ico" />
     <None Remove="Resources\missing_jigsawpuzzle.ico" />
+    <None Remove="tasklinker.db" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Resources\color_jigsawpuzzle.ico" />
     <Content Include="Resources\gold_jigsawpuzzle.ico" />
     <Content Include="Resources\missing_jigsawpuzzle.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
   </ItemGroup>
 
   <ItemGroup>

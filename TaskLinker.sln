@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskLinker.UI", "TaskLinker.UI\TaskLinker.UI.csproj", "{F0DCE1B7-8EEC-434F-ACD4-1D385729E9C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskLinker.UI", "TaskLinker.UI\TaskLinker.UI.csproj", "{F0DCE1B7-8EEC-434F-ACD4-1D385729E9C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskLinker.Persistence", "TaskLinker.Persistence\TaskLinker.Persistence.csproj", "{9EC84949-DD9A-44FE-A8F1-C6E8012211CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskLinker.Persistence", "TaskLinker.Persistence\TaskLinker.Persistence.csproj", "{9EC84949-DD9A-44FE-A8F1-C6E8012211CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskLinker.Model", "TaskLinker.Model\TaskLinker.Model.csproj", "{41811D26-1969-4D44-8A16-69E1CF07A96C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{9EC84949-DD9A-44FE-A8F1-C6E8012211CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EC84949-DD9A-44FE-A8F1-C6E8012211CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9EC84949-DD9A-44FE-A8F1-C6E8012211CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41811D26-1969-4D44-8A16-69E1CF07A96C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41811D26-1969-4D44-8A16-69E1CF07A96C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41811D26-1969-4D44-8A16-69E1CF07A96C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41811D26-1969-4D44-8A16-69E1CF07A96C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

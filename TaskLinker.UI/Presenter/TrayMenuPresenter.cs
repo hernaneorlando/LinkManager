@@ -1,27 +1,47 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using TaskLinker.Persistence;
+using TaskLinker.Persistence.Impl;
 using TaskLinker.UI.View;
 
 namespace TaskLinker.UI.Presenter
 {
     public class TrayMenuPresenter
     {
-        private ITrayMenuView _view;
+        private readonly IMenuItemRepository _menuItemRepository;
+        //private readonly ITrayMenuView _view;
 
-        public TrayMenuPresenter()
+        public TrayMenuPresenter(IMenuItemRepository menuItemRepository)
         {
+            //_view = view;
+            _menuItemRepository = menuItemRepository;
             CheckRegistryRunValue();
         }
 
-        public void AttachView(ITrayMenuView view)
-        {
-            _view = view;
-        }
+        //public void AttachView(ITrayMenuView view)
+        //{
+        //    _view = view;
+        //}
 
-        public ToolStripItem[] GetMenuList()
+        public async Task<ToolStripItem[]> GetMenuList()
         {
-            return new ToolStripItem[] { };
+            var menuList = new List<ToolStripItem>();
+            static ToolStripMenuItem selector(Model.Command command) =>
+                new ToolStripMenuItem(command.LinkName, null, (s, e) => Process.Start(command.CommandLine));
+
+            var groups = await _menuItemRepository.GetAllMenuItems();
+            foreach (var group in groups)
+            {
+                menuList.AddRange(group.Commands.Select(selector));
+                menuList.Add(new ToolStripMenuItem("-"));
+            }
+
+            return menuList.ToArray();
         }
 
         private void CheckRegistryRunValue()

@@ -9,11 +9,12 @@ namespace TaskLinker.UI
     {
         private readonly SettingPresenter _presenter;
 
-        public SettingsForm()
+        public SettingsForm(SettingPresenter presenter)
         {
+            _presenter = presenter;
+
             InitializeComponent();
             Load += SettingsForm_Load;
-            _presenter = new SettingPresenter();
         }
 
         public void ShowConfig()

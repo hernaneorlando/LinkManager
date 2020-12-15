@@ -12,9 +12,11 @@ namespace TaskLinker.UI
         private readonly NotifyIcon _trayIcon;
         private readonly ISettingView _settings;
 
-        public TrayMenu()
+        public TrayMenu(TrayMenuPresenter presenter, ISettingView settings)
         {
-            _presenter = new TrayMenuPresenter();
+            _presenter = presenter;
+            _settings = settings;
+
             _trayIcon = new NotifyIcon
             {
                 Icon = Resources.ColorJigsawPuzzle,
@@ -22,17 +24,15 @@ namespace TaskLinker.UI
                 Visible = true
             };
 
-            _settings = new SettingsForm();
+            InitMenu();
         }
 
-        public void InitMenu()
+        private async void InitMenu()
         {
-            _presenter.AttachView(this);
-
             _trayIcon.ContextMenuStrip.Items.Add("Settings", null, ShowConfig);
             _trayIcon.ContextMenuStrip.Items.Add("-");
             _trayIcon.ContextMenuStrip.Items.Add("Exit", null, Exit);
-            _trayIcon.ContextMenuStrip.Items.AddRange(_presenter.GetMenuList());
+            _trayIcon.ContextMenuStrip.Items.AddRange(await _presenter.GetMenuList());
         }
 
         private void ShowConfig(object sender, EventArgs e)
@@ -43,6 +43,7 @@ namespace TaskLinker.UI
         private void Exit(object sender, EventArgs e)
         {
             _trayIcon.Dispose();
+            Dispose();
             Application.Exit();
         }
     }
