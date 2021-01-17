@@ -30,10 +30,13 @@ namespace TaskLinker.Persistence.Impl
                 .Include(e => e.CommandItems)
                 .ToList();
 
-            var toInsert = groupsList.Except(persistedGroups);
             var toDelete = persistedGroups.Except(groupsList);
+            var toInsert = groupsList.Except(persistedGroups);
 
-            var toUpdate = persistedGroups.Except(toInsert);
+            var toUpdate = persistedGroups
+                .Except(toInsert)
+                .Except(toDelete);
+
             foreach (var groupToUpdate in toUpdate)
             {
                 _dataContext.CommandItems.RemoveRange(groupToUpdate.CommandItems);
@@ -47,6 +50,11 @@ namespace TaskLinker.Persistence.Impl
             _dataContext.Groups.AddRange(toInsert);
             _dataContext.Groups.UpdateRange(toUpdate);
             _dataContext.Groups.RemoveRange(toDelete);
+
+            foreach (var commandToDelete in toDelete.SelectMany(g => g.CommandItems))
+            {
+                _dataContext.CommandItems.Local.Remove(commandToDelete);
+            }
 
             _dataContext.SaveChanges();
         }

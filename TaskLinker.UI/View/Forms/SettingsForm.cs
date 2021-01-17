@@ -79,12 +79,12 @@ namespace TaskLinker.UI.View.Forms
                         if (!string.IsNullOrWhiteSpace(item.CommandLine))
                         {
                             textNode.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(textNode, EditUrl));
-
                         }
 
                         urlNode.Nodes.Add(textNode);
-                        urlNode.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(urlNode, Edit));
                     }
+
+                    urlNode.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(urlNode, Edit));
 
                     return urlNode;
                 }).ToArray();
@@ -95,7 +95,10 @@ namespace TaskLinker.UI.View.Forms
                 };
 
                 if (createGroupNodeContextMenu)
+                {
                     groupNode.ContextMenuStrip.Items.Add(NewSubGroup, null, (sender, e) => AddNewSubGroup(groupNode));
+                    groupNode.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(groupNode, Edit));
+                }
 
                 tvwCommandItems.Nodes.Add(groupNode);
             });
@@ -111,6 +114,13 @@ namespace TaskLinker.UI.View.Forms
         private void EditTreeNodeName(TreeNode node, string caption)
         {
             var text = _newCommandLineView.ShowPrompt(caption, Edit, node.Text);
+
+            if (node.Level == 0)
+            {
+                var group = _presenter.Groups.SingleOrDefault(g => g.Name == node.Text);
+                _presenter.Groups.Remove(group);
+            }
+
             if (!string.IsNullOrWhiteSpace(text))
                 node.Text = text;
         }
@@ -135,7 +145,9 @@ namespace TaskLinker.UI.View.Forms
 
                 case 1:
                     node.Nodes.Add(newNode);
-                    node.ContextMenuStrip = null;
+                    node.ContextMenuStrip = new ContextMenuStrip();
+                    node.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(node, Edit));
+                    newNode.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(newNode, Edit));
                     return;
 
                 default:
@@ -144,6 +156,7 @@ namespace TaskLinker.UI.View.Forms
             }
 
             newNode.ContextMenuStrip.Items.Add(menuText, null, (sender, e) => AddNewSubGroup(newNode));
+            newNode.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(newNode, Edit));
         }
 
         private void EnableButtons()
