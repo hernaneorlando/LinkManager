@@ -20,7 +20,7 @@ namespace TaskLinker.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Commands",
+                name: "CommandItems",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -30,9 +30,9 @@ namespace TaskLinker.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Commands", x => x.Id);
+                    table.PrimaryKey("PK_CommandItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Commands_Groups_GroupId",
+                        name: "FK_CommandItems_Groups_GroupId",
                         column: x => x.GroupId,
                         principalTable: "Groups",
                         principalColumn: "Id",
@@ -40,25 +40,27 @@ namespace TaskLinker.Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Commands_CommandLine",
-                table: "Commands",
-                column: "CommandLine");
+                name: "IX_CommandItems_CommandLine",
+                table: "CommandItems",
+                column: "CommandLine",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Commands_GroupId",
-                table: "Commands",
+                name: "IX_CommandItems_GroupId",
+                table: "CommandItems",
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Groups_Name",
                 table: "Groups",
-                column: "Name");
+                column: "Name",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Commands");
+                name: "CommandItems");
 
             migrationBuilder.DropTable(
                 name: "Groups");

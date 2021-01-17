@@ -6,6 +6,7 @@ namespace TaskLinker.Persistence
 {
     public interface IMenuItemRepository
     {
-        public Task<IList<Group>> GetAllMenuItems();
+        Task<IList<Group>> GetAllMenuItems();
+        void Save(List<Group> groupsList);
     }
 }

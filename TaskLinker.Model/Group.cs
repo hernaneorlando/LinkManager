@@ -7,11 +7,26 @@ namespace TaskLinker.Model
     {
         public Group()
         {
-            Commands = new List<Command>();
+            CommandItems = new List<CommandItem>();
         }
 
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public IList<Command> Commands { get; set; }
+        public List<CommandItem> CommandItems { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Group group)
+            {
+                return Equals(Name, group.Name);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode(StringComparison.InvariantCultureIgnoreCase);
+        }
     }
 }

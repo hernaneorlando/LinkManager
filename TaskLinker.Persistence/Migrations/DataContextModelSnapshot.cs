@@ -16,7 +16,7 @@ namespace TaskLinker.Persistence.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.1");
 
-            modelBuilder.Entity("TaskLinker.Model.Command", b =>
+            modelBuilder.Entity("TaskLinker.Model.CommandItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,11 +33,12 @@ namespace TaskLinker.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CommandLine");
+                    b.HasIndex("CommandLine")
+                        .IsUnique();
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("Commands");
+                    b.ToTable("CommandItems");
                 });
 
             modelBuilder.Entity("TaskLinker.Model.Group", b =>
@@ -51,21 +52,22 @@ namespace TaskLinker.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Groups");
                 });
 
-            modelBuilder.Entity("TaskLinker.Model.Command", b =>
+            modelBuilder.Entity("TaskLinker.Model.CommandItem", b =>
                 {
                     b.HasOne("TaskLinker.Model.Group", null)
-                        .WithMany("Commands")
+                        .WithMany("CommandItems")
                         .HasForeignKey("GroupId");
                 });
 
             modelBuilder.Entity("TaskLinker.Model.Group", b =>
                 {
-                    b.Navigation("Commands");
+                    b.Navigation("CommandItems");
                 });
 #pragma warning restore 612, 618
         }

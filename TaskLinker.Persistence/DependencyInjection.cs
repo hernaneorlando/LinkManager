@@ -8,11 +8,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddPersistenceDependency(this ServiceCollection service)
         {
-            service.AddDbContext<DataContext>(options =>
-            {
-                options.UseSqlite("Data Source=tasklinker.db");
-            }, ServiceLifetime.Singleton);
-
+            service.AddDbContext<DataContext>(ServiceLifetime.Singleton);
             service.AddSingleton<IMenuItemRepository, MenuItemRepository>();
 
             var dataContext = service.BuildServiceProvider().GetService<DataContext>();

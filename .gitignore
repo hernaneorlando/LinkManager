@@ -3,3 +3,4 @@ Debug
 obj
 bin
 *.user
+tasklinker.db

@@ -13,15 +13,11 @@
 
   <ItemGroup>
     <None Remove="Resources\color_jigsawpuzzle.ico" />
-    <None Remove="Resources\gold_jigsawpuzzle.ico" />
-    <None Remove="Resources\missing_jigsawpuzzle.ico" />
     <None Remove="tasklinker.db" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Resources\color_jigsawpuzzle.ico" />
-    <Content Include="Resources\gold_jigsawpuzzle.ico" />
-    <Content Include="Resources\missing_jigsawpuzzle.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TaskLinker.Model\TaskLinker.Model.csproj" />
     <ProjectReference Include="..\TaskLinker.Persistence\TaskLinker.Persistence.csproj" />
   </ItemGroup>
 

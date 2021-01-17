@@ -121,10 +121,4 @@
   <data name="ColorJigsawPuzzle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\color_jigsawpuzzle.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="GoldJigsawPuzzle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\gold_jigsawpuzzle.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MissingJigsawPuzzle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\missing_jigsawpuzzle.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

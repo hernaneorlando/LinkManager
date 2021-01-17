@@ -69,25 +69,5 @@ namespace TaskLinker.UI.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        internal static System.Drawing.Icon GoldJigsawPuzzle {
-            get {
-                object obj = ResourceManager.GetObject("GoldJigsawPuzzle", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        internal static System.Drawing.Icon MissingJigsawPuzzle {
-            get {
-                object obj = ResourceManager.GetObject("MissingJigsawPuzzle", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
     }
 }

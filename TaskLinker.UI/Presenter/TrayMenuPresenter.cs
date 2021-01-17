@@ -2,43 +2,42 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TaskLinker.Persistence;
-using TaskLinker.Persistence.Impl;
-using TaskLinker.UI.View;
 
 namespace TaskLinker.UI.Presenter
 {
     public class TrayMenuPresenter
     {
         private readonly IMenuItemRepository _menuItemRepository;
-        //private readonly ITrayMenuView _view;
 
         public TrayMenuPresenter(IMenuItemRepository menuItemRepository)
         {
-            //_view = view;
             _menuItemRepository = menuItemRepository;
             CheckRegistryRunValue();
         }
 
-        //public void AttachView(ITrayMenuView view)
-        //{
-        //    _view = view;
-        //}
-
         public async Task<ToolStripItem[]> GetMenuList()
         {
             var menuList = new List<ToolStripItem>();
-            static ToolStripMenuItem selector(Model.Command command) =>
+            static ToolStripMenuItem selector(Model.CommandItem command) =>
                 new ToolStripMenuItem(command.LinkName, null, (s, e) => Process.Start(command.CommandLine));
 
             var groups = await _menuItemRepository.GetAllMenuItems();
             foreach (var group in groups)
             {
-                menuList.AddRange(group.Commands.Select(selector));
-                menuList.Add(new ToolStripMenuItem("-"));
+                var groupName = new ToolStripLabel
+                {
+                    Text = group.Name,
+                    Padding = new Padding(4, 0, 0, 4)
+                };
+
+                menuList.Add(groupName);
+                menuList.AddRange(group.CommandItems.Select(selector));
+                menuList.Add(new ToolStripSeparator());
             }
 
             return menuList.ToArray();

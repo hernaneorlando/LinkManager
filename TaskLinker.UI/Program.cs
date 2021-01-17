@@ -3,6 +3,7 @@ using System;
 using System.Windows.Forms;
 using TaskLinker.UI.Presenter;
 using TaskLinker.UI.View;
+using TaskLinker.UI.View.Forms;
 
 namespace TaskLinker.UI
 {
@@ -20,6 +21,10 @@ namespace TaskLinker.UI
 
             var serviceProvider = RegisterServices();
 
+            var handler = serviceProvider.GetService<ExceptionHandler>();
+            Application.ThreadException += handler.ThreadException;
+            AppDomain.CurrentDomain.UnhandledException += handler.UnhandledException;
+
             var trayMenu = (TrayMenu)serviceProvider.GetService<ITrayMenuView>();
             Application.Run(trayMenu);
         }
@@ -30,13 +35,20 @@ namespace TaskLinker.UI
 
             service.AddPersistenceDependency();
 
+            service.AddSingleton<IExceptionView, ExceptionForm>();
+            service.AddSingleton<ExceptionHandler>();
+
+            service
+                .AddSingleton<TrayMenuPresenter>()
+                .AddSingleton<ITrayMenuView, TrayMenu>();
+
             service
                 .AddSingleton<SettingPresenter>()
                 .AddSingleton<ISettingView, SettingsForm>();
 
             service
-                .AddSingleton<TrayMenuPresenter>()
-                .AddSingleton<ITrayMenuView, TrayMenu>();
+                .AddSingleton<NewCommandLinePresenter>()
+                .AddSingleton<INewCommandLineView, NewCommandLineForm>();
 
             return service.BuildServiceProvider(true);
         }

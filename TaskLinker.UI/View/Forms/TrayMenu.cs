@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using TaskLinker.UI.Presenter;
 using TaskLinker.UI.Properties;
-using TaskLinker.UI.View;
 
-namespace TaskLinker.UI
+namespace TaskLinker.UI.View.Forms
 {
     public class TrayMenu : ApplicationContext, ITrayMenuView
     {
@@ -21,7 +21,8 @@ namespace TaskLinker.UI
             {
                 Icon = Resources.ColorJigsawPuzzle,
                 ContextMenuStrip = new ContextMenuStrip(),
-                Visible = true
+                Visible = true,
+                Text = "Link Manager"
             };
 
             InitMenu();
@@ -29,15 +30,17 @@ namespace TaskLinker.UI
 
         private async void InitMenu()
         {
+            _trayIcon.ContextMenuStrip.Items.AddRange(await _presenter.GetMenuList());
             _trayIcon.ContextMenuStrip.Items.Add("Settings", null, ShowConfig);
             _trayIcon.ContextMenuStrip.Items.Add("-");
             _trayIcon.ContextMenuStrip.Items.Add("Exit", null, Exit);
-            _trayIcon.ContextMenuStrip.Items.AddRange(await _presenter.GetMenuList());
         }
 
         private void ShowConfig(object sender, EventArgs e)
         {
             _settings.ShowConfig();
+            _trayIcon.ContextMenuStrip.Items.Clear();
+            InitMenu();
         }
 
         private void Exit(object sender, EventArgs e)
