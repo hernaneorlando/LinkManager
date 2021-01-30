@@ -77,7 +77,7 @@ namespace TaskLinker.UI.View.Forms
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(811, 408);
+            this.btnSave.Location = new System.Drawing.Point(808, 408);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(88, 27);
@@ -88,7 +88,7 @@ namespace TaskLinker.UI.View.Forms
             // 
             // btnDeleteNode
             // 
-            this.btnDeleteNode.Location = new System.Drawing.Point(370, 8);
+            this.btnDeleteNode.Location = new System.Drawing.Point(272, 9);
             this.btnDeleteNode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnDeleteNode.Name = "btnDeleteNode";
             this.btnDeleteNode.Size = new System.Drawing.Size(88, 27);
@@ -100,7 +100,7 @@ namespace TaskLinker.UI.View.Forms
             // 
             // btnAddNewGroup
             // 
-            this.btnAddNewGroup.Location = new System.Drawing.Point(107, 8);
+            this.btnAddNewGroup.Location = new System.Drawing.Point(9, 8);
             this.btnAddNewGroup.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnAddNewGroup.Name = "btnAddNewGroup";
             this.btnAddNewGroup.Size = new System.Drawing.Size(113, 27);
@@ -111,8 +111,8 @@ namespace TaskLinker.UI.View.Forms
             // 
             // btnMarkGroup
             // 
-            this.btnMarkGroup.Location = new System.Drawing.Point(229, 8);
-            this.btnMarkGroup.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.btnMarkGroup.Location = new System.Drawing.Point(131, 8);
+            this.btnMarkGroup.Margin = new System.Windows.Forms.Padding(5);
             this.btnMarkGroup.Name = "btnMarkGroup";
             this.btnMarkGroup.Size = new System.Drawing.Size(132, 27);
             this.btnMarkGroup.TabIndex = 2;
@@ -122,8 +122,8 @@ namespace TaskLinker.UI.View.Forms
             // 
             // btnExpandAll
             // 
-            this.btnExpandAll.Location = new System.Drawing.Point(10, 8);
-            this.btnExpandAll.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.btnExpandAll.Location = new System.Drawing.Point(9, 408);
+            this.btnExpandAll.Margin = new System.Windows.Forms.Padding(5);
             this.btnExpandAll.Name = "btnExpandAll";
             this.btnExpandAll.Size = new System.Drawing.Size(88, 27);
             this.btnExpandAll.TabIndex = 1;

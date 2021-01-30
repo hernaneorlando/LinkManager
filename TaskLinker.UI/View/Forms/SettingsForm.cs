@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using TaskLinker.Model;
+using TaskLinker.UI.Extensions;
 using TaskLinker.UI.Presenter;
 using TaskLinker.UI.View.Components;
 
@@ -48,123 +48,6 @@ namespace TaskLinker.UI.View.Forms
         {
             _presenter.AttachView(this);
             CreateNodes(true);
-        }
-
-        private void CreateNodes(bool createGroupNodeContextMenu)
-        {
-            tvwCommandItems.Nodes.Clear();
-            _presenter.Groups.ForEach(node =>
-            {
-                var nodes = node.CommandItems.Select(item =>
-                {
-                    var urlNode = new TreeNode
-                    {
-                        Text = item.LinkName,
-                        ContextMenuStrip = new ContextMenuStrip()
-                    };
-
-                    if (string.IsNullOrWhiteSpace(item.CommandLine) && createGroupNodeContextMenu)
-                    {
-                        urlNode.ContextMenuStrip.Items.Add(NewUrl, null, (sender, e) => AddNewSubGroup(urlNode));
-                    }
-                    else
-                    {
-                        var textNode = new HiddenCheckBoxTreeNode
-                        {
-                            Text = item.CommandLine,
-                            Checked = false,
-                            ContextMenuStrip = new ContextMenuStrip()
-                        };
-
-                        if (!string.IsNullOrWhiteSpace(item.CommandLine))
-                        {
-                            textNode.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(textNode, EditUrl));
-                        }
-
-                        urlNode.Nodes.Add(textNode);
-                    }
-
-                    urlNode.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(urlNode, Edit));
-
-                    return urlNode;
-                }).ToArray();
-
-                var groupNode = new TreeNode(node.Name, nodes)
-                {
-                    ContextMenuStrip = new ContextMenuStrip()
-                };
-
-                if (createGroupNodeContextMenu)
-                {
-                    groupNode.ContextMenuStrip.Items.Add(NewSubGroup, null, (sender, e) => AddNewSubGroup(groupNode));
-                    groupNode.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(groupNode, Edit));
-                }
-
-                tvwCommandItems.Nodes.Add(groupNode);
-            });
-
-            EnableButtons();
-        }
-
-        private void AddNewSubGroup(TreeNode groupNode)
-        {
-            CreateNodeContextMenu(groupNode, SubGroupName, NewSubGroup, NewUrl);
-        }
-
-        private void EditTreeNodeName(TreeNode node, string caption)
-        {
-            var text = _newCommandLineView.ShowPrompt(caption, Edit, node.Text);
-
-            if (node.Level == 0)
-            {
-                var group = _presenter.Groups.SingleOrDefault(g => g.Name == node.Text);
-                _presenter.Groups.Remove(group);
-            }
-
-            if (!string.IsNullOrWhiteSpace(text))
-                node.Text = text;
-        }
-
-        private void CreateNodeContextMenu(TreeNode node, string nodeText, string nodeCaption, string menuText)
-        {
-            var nodePrompt = _newCommandLineView.ShowPrompt(nodeText, nodeCaption);
-            if (string.IsNullOrWhiteSpace(nodePrompt))
-                return;
-
-            var newNode = new TreeNode
-            {
-                Text = nodePrompt,
-                ContextMenuStrip = new ContextMenuStrip()
-            };
-
-            switch (node?.Level)
-            {
-                case 0:
-                    node.Nodes.Add(newNode);
-                    break;
-
-                case 1:
-                    node.Nodes.Add(newNode);
-                    node.ContextMenuStrip = new ContextMenuStrip();
-                    node.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(node, Edit));
-                    newNode.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(newNode, Edit));
-                    return;
-
-                default:
-                    tvwCommandItems.Nodes.Add(newNode);
-                    break;
-            }
-
-            newNode.ContextMenuStrip.Items.Add(menuText, null, (sender, e) => AddNewSubGroup(newNode));
-            newNode.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(newNode, Edit));
-        }
-
-        private void EnableButtons()
-        {
-            var enable = tvwCommandItems.Nodes.Count > 0 && tvwCommandItems.Nodes[0].Nodes.Count > 0;
-
-            btnExpandAll.Enabled = enable;
-            btnMarkGroup.Enabled = enable;
         }
 
         private void BtnExpandAll_Click(object sender, EventArgs e)
@@ -251,6 +134,121 @@ namespace TaskLinker.UI.View.Forms
             _presenter.SaveList();
 
             Close();
+        }
+
+        private void CreateNodes(bool createGroupNodeContextMenu)
+        {
+            tvwCommandItems.Nodes.Clear();
+            _presenter.Groups.ForEach(node =>
+            {
+                var nodes = node.CommandItems.Select(item =>
+                {
+                    var urlNode = new TreeNode
+                    {
+                        Text = item.LinkName,
+                        ContextMenuStrip = new ContextMenuStrip()
+                    };
+
+                    if (string.IsNullOrWhiteSpace(item.CommandLine) && createGroupNodeContextMenu)
+                    {
+                        urlNode.ContextMenuStrip.Items.Add(NewUrl, null, (sender, e) => CreateNodeContextMenu(urlNode, SubGroupName, NewSubGroup, NewUrl));
+                    }
+                    else
+                    {
+                        var textNode = new HiddenCheckBoxTreeNode
+                        {
+                            Text = item.CommandLine,
+                            Checked = false,
+                            ContextMenuStrip = new ContextMenuStrip()
+                        };
+
+                        if (!string.IsNullOrWhiteSpace(item.CommandLine))
+                        {
+                            textNode.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(textNode, EditUrl));
+                        }
+
+                        urlNode.Nodes.Add(textNode);
+                    }
+
+                    urlNode.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(urlNode, Edit));
+
+                    return urlNode;
+                }).ToArray();
+
+                var groupNode = new TreeNode(node.Name, nodes)
+                {
+                    ContextMenuStrip = new ContextMenuStrip()
+                };
+
+                if (createGroupNodeContextMenu)
+                {
+                    groupNode.ContextMenuStrip.Items.Add(NewSubGroup, null, (sender, e) => CreateNodeContextMenu(groupNode, SubGroupName, NewSubGroup, NewUrl));
+                    groupNode.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(groupNode, Edit));
+                }
+
+                tvwCommandItems.Nodes.Add(groupNode);
+            });
+
+            EnableButtons();
+        }
+
+        private void CreateNodeContextMenu(TreeNode node, string nodeText, string nodeCaption, string menuText)
+        {
+            var nodePrompt = _newCommandLineView.ShowPrompt(nodeText, nodeCaption);
+            if (string.IsNullOrWhiteSpace(nodePrompt))
+                return;
+
+            var newNode = new TreeNode
+            {
+                Text = nodePrompt,
+                ContextMenuStrip = new ContextMenuStrip()
+            };
+
+            switch (node?.Level)
+            {
+                case 0:
+                    node.AddWithValidation(newNode);
+                    break;
+
+                case 1:
+                    if (node.AddWithValidation(newNode))
+                    {
+                        node.ContextMenuStrip = new ContextMenuStrip();
+                        node.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(node, Edit));
+                        newNode.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(newNode, Edit));
+                    }
+
+                    return;
+
+                default:
+                    tvwCommandItems.AddWithValidation(newNode);
+                    break;
+            }
+
+            newNode.ContextMenuStrip.Items.Add(menuText, null, (sender, e) => CreateNodeContextMenu(newNode, SubGroupName, NewSubGroup, NewUrl));
+            newNode.ContextMenuStrip.Items.Add(Edit, null, (sender, e) => EditTreeNodeName(newNode, Edit));
+        }
+
+        private void EditTreeNodeName(TreeNode node, string caption)
+        {
+            var text = _newCommandLineView.ShowPrompt(caption, Edit, node.Text);
+
+            if (node.Level == 0)
+            {
+                var group = _presenter.Groups.SingleOrDefault(g => g.Name == node.Text);
+                _presenter.Groups.Remove(group);
+            }
+
+            if (!string.IsNullOrWhiteSpace(text))
+                node.Text = text;
+        }
+
+        private void EnableButtons()
+        {
+            var enable = tvwCommandItems.Nodes.Count > 0 && tvwCommandItems.Nodes[0].Nodes.Count > 0;
+
+            btnExpandAll.Enabled = enable;
+            btnMarkGroup.Enabled = enable;
         }
 
         private void SetCommandItems(TreeNode groupNode, Group group)
